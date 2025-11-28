@@ -4,12 +4,15 @@ import {
   Badge,
   Box,
   IconButton,
+  LinearProgress,
   List,
   ListItem,
   Toolbar,
   Typography,
 } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../store/store";
+import { setDarkMode } from "./uiSlice";
 
 const midLinks = [
   { title: "catalog", path: "/catalog" },
@@ -34,12 +37,10 @@ const navStyles = {
   },
 };
 
-type Props = {
-  modeHandler: () => void;
-  darkMode: boolean;
-};
 
-export default function NavBar({ darkMode, modeHandler }: Props) {
+export default function NavBar() {
+  const {isLoading,darkMode} = useAppSelector(state => state.ui);
+  const dispatch = useAppDispatch();
   return (
     <AppBar position="fixed">
       <Toolbar sx={{display:"flex", justifyContent:"space-between", alignItems:"center"}}>
@@ -52,7 +53,7 @@ export default function NavBar({ darkMode, modeHandler }: Props) {
           >
             ILDA Kosmetik
           </Typography>
-          <IconButton onClick={modeHandler}>
+          <IconButton onClick={()=> dispatch(setDarkMode())}>
             {darkMode ? (
               <DarkMode></DarkMode>
             ) : (
@@ -83,6 +84,11 @@ export default function NavBar({ darkMode, modeHandler }: Props) {
           </List>
         </Box>
       </Toolbar>
+      {isLoading && (
+        <Box>
+          <LinearProgress color="secondary"></LinearProgress>
+        </Box>
+      )}
     </AppBar>
   );
 }
