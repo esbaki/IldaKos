@@ -10,9 +10,10 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { setDarkMode } from "./uiSlice";
+import { useFetchCartQuery } from "../../features/cart/cartApi";
 
 const midLinks = [
   { title: "catalog", path: "/catalog" },
@@ -41,6 +42,10 @@ const navStyles = {
 export default function NavBar() {
   const {isLoading,darkMode} = useAppSelector(state => state.ui);
   const dispatch = useAppDispatch();
+  const {data: cart} = useFetchCartQuery();
+  const itemCount = cart?.items.reduce((sum, item) => sum + item.quantity, 0) || 0;
+
+
   return (
     <AppBar position="fixed">
       <Toolbar sx={{display:"flex", justifyContent:"space-between", alignItems:"center"}}>
@@ -69,8 +74,8 @@ export default function NavBar() {
           ))}
         </List>
         <Box sx={{display:"flex", alignItems:"center"}}>
-          <IconButton size="large">
-            <Badge badgeContent="31" color="secondary">
+          <IconButton size="large" component={Link} to="/cart">
+            <Badge badgeContent ={`${itemCount}`}   color="secondary">
               <ShoppingCart></ShoppingCart>
             </Badge>
           </IconButton>
