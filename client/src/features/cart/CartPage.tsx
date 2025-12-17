@@ -1,7 +1,7 @@
 import { Grid2, Typography } from "@mui/material";
 import { useFetchCartQuery } from "./cartApi"
 import CartItem from "./CartItem";
-import OrderSummary from "../../app/shared/OrderSummary";
+import OrderSummary from "../../app/shared/components/OrderSummary";
 
 
 export default function CartPage() {

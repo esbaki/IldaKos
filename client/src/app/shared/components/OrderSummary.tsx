@@ -1,5 +1,5 @@
 import { Box, Typography, Divider, Button, TextField, Paper } from "@mui/material";
-import { currencyFormat } from "../../lib/util";
+import { currencyFormat } from "../../../lib/util";
 import { Link } from "react-router-dom";
 
 type Props = {
